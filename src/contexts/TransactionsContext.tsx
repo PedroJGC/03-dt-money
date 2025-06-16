@@ -22,18 +22,27 @@ export const TransactionsContext = createContext({} as TransactionContextType)
 
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [allTransactions, setAllTransactions] = useState<Transaction[]>([])
 
   async function fetchTransactions(query?: string) {
-    const url = new URL("http://localhost:3333/transactions")
+    if (!query) {
+      const response = await fetch("http://localhost:3333/transactions")
+      const data = await response.json()
 
-    if (query) {
-      url.searchParams.append("q", query)
+      setAllTransactions(data)
+      setTransactions(data)
+      return
     }
+    const filteredTransactions = allTransactions.filter((transaction) => {
+      const searchTerm = query.toLowerCase()
 
-    const response = await fetch(url)
-    const data = await response.json()
+      return (
+        transaction.description.toLowerCase().includes(searchTerm) ||
+        transaction.category.toLowerCase().includes(searchTerm)
+      )
+    })
 
-    setTransactions(data)
+    setTransactions(filteredTransactions)
   }
 
   useEffect(() => {
