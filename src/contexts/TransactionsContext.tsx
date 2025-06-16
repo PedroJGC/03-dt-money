@@ -33,7 +33,11 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     const response = await fetch(url)
     const data = await response.json()
 
-    setTransactions(data)
+    if (Array.isArray(data)) {
+      setTransactions(data)
+    } else {
+      setTransactions(data.transactions || [])
+    }
   }
 
   useEffect(() => {
