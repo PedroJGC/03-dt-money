@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState, type ReactNode } from "react"
+import { api } from "../lib/axios"
 
 interface Transaction {
   id: number
@@ -22,27 +23,34 @@ export const TransactionsContext = createContext({} as TransactionContextType)
 
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([])
-  const [allTransactions, setAllTransactions] = useState<Transaction[]>([])
+  // const [allTransactions, setAllTransactions] = useState<Transaction[]>([])
 
   async function fetchTransactions(query?: string) {
-    if (!query) {
-      const response = await fetch("http://localhost:3333/transactions")
-      const data = await response.json()
+    // if (!query) {
+    //   const response = await fetch("/transactions")
+    //   const data = await response.json()
 
-      setAllTransactions(data)
-      setTransactions(data)
-      return
-    }
-    const filteredTransactions = allTransactions.filter((transaction) => {
-      const searchTerm = query.toLowerCase()
+    //   setAllTransactions(data)
+    //   setTransactions(data)
+    //   return
+    // }
+    // const filteredTransactions = allTransactions.filter((transaction) => {
+    //   const searchTerm = query.toLowerCase()
 
-      return (
-        transaction.description.toLowerCase().includes(searchTerm) ||
-        transaction.category.toLowerCase().includes(searchTerm)
-      )
+    //   return (
+    //     transaction.description.toLowerCase().includes(searchTerm) ||
+    //     transaction.category.toLowerCase().includes(searchTerm)
+    //   )
+    // })
+
+    // setTransactions(filteredTransactions)
+
+    const response = await api.get("transactions", {
+      params: {
+        q: query,
+      },
     })
-
-    setTransactions(filteredTransactions)
+    setTransactions(response.data)
   }
 
   useEffect(() => {
