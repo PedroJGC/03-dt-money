@@ -20,7 +20,9 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.58.0",
+    "scheduler": "^0.26.0",
     "styled-components": "^6.1.18",
+    "use-context-selector": "^2.0.0",
     "zod": "^3.25.63"
   },
   "devDependencies": {
@@ -32,7 +34,7 @@
     "@vitejs/plugin-react": "^4.4.1",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-prettier": "^5.4.1",
+    "eslint-plugin-prettier": "^5.5.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
